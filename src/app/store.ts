@@ -1,13 +1,6 @@
 import { configureStore} from '@reduxjs/toolkit';
-//import stateReducer from '../features/counter/counterSlice';
-//import { createStore } from 'redux';
-//const initialState = { /* ... */ };
+
 import { createAction } from '@reduxjs/toolkit';
-/*export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-});*/
 
 const UPDATE_FIELD = 'UPDATE_FIELD';
 const SUBMIT_FORM = 'SUBMIT_FORM';
@@ -58,7 +51,6 @@ const formReducer = (state = initialState, action: any) => {
         [key]: value,
       };
     case SUBMIT_FORM:
-      // Do something with the form data
       return state;
     default:
       return state;
