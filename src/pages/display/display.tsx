@@ -27,10 +27,11 @@ const DisplayPage: React.FC = (quote) => {
         async function fetchData() {
             const quoteData = await updateQuote();
             quoteRef.current = quoteData;
-            dispatch(updatePage2('quote', quoteRef));
+            if (pageTwoState.quote === '')
+                dispatch(updatePage2('quote', quoteRef));
         }
         fetchData()
-    }, [])
+    },)
     return (
         <>
             <h2>Display Page</h2>
