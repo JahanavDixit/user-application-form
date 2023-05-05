@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import './homepage.css';
-
-import { store, updatePage1 } from '../../app/store';
-
-const page: string = 'page1';
 
 interface FormData {
   name: string;
@@ -20,7 +16,6 @@ const Homepage = ({ name, add, mail, phone, updatePage1 }: any) => {
   const navigate = useNavigate();
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();

@@ -23,7 +23,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/second" element={<SecondPage gen='' date='' photo='' updatePage2={updatePage2} />} />
+          <Route path="/second" element={<SecondPage gen='' date='' photo='' quote='' updatePage2={updatePage2} />} />
           <Route path="/display" element={<DisplayPage />} />
         </Routes>
       </BrowserRouter>
