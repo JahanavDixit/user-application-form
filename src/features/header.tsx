@@ -1,11 +1,12 @@
 import React from "react";
 import './header.css';
+import { Link } from "react-router-dom";
 
 const Header = () => {
 
     return (
         <div className="header">
-            <div> User Information Form </div>
+            <Link to="/"> User Information Form </Link>
         </div>
     );
 
