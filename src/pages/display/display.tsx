@@ -1,16 +1,39 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { store } from '../../app/store';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePage2 } from '../../app/store';
 
-const DisplayPage: React.FC = () => {
+async function updateQuote() {
+    const response = await fetch("https://api.quotable.io/random");
+    const data = await response.json();
+    if (response.ok) {
+        // Update DOM elements
+        const content: string = data.content;
+        const author: string = data.author;
+        return { content, author }
+    } else {
+        const content: string = "An error occured";
+        return { content, data }
+    }
+}
+
+
+const DisplayPage: React.FC = (quote) => {
     const pageOneState = useSelector((state: any) => state.form.page1);
     const pageTwoState = useSelector((state: any) => state.form.page2);
-    console.log(pageOneState);
-    console.log(pageTwoState);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        async function fetchData() {
+            const quoteData = await updateQuote();
+            quote = quoteData;
+            dispatch(updatePage2('quote', quote));
+        }
+        fetchData()
+    }, [])
     return (
         <>
             <h2>Quote : </h2>
-            <p>QQuote goes here</p>
+            <i>{pageTwoState.quote.content} <br />
+                - {pageTwoState.quote.author}</i>
             <h3>Display Page</h3>
             <p>Name:  {pageOneState.name}</p>
             <p>Address:  {pageOneState.add}</p>

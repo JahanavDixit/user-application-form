@@ -11,6 +11,7 @@ const initialState = {
     dob: '',
     gender: '',
     photo: '',
+    quote : {}
   },
 };
 

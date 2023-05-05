@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { FieldValue, SubmitHandler, useForm } from 'react-hook-form';
@@ -11,17 +11,42 @@ interface prop {
     gen: string,
     date: string,
     photo: any,
+    quote: any,
     updatePage2: any
 };
 
+async function updateQuote() {
+    const response = await fetch("https://api.quotable.io/random");
+    const data = await response.json();
+    if (response.ok) {
+        // Update DOM elements
+        const content: string = data.content;
+        const author: string = data.author;
+        return { content, author }
+    } else {
+        const content: string = "An error occured";
+        return { content, data }
+    }
+}
 
-const SecondPage = ({ gen, date, photo, updatePage2 }: prop) => {
+
+
+const SecondPage = ({ gen, date, photo, quote, updatePage2 }: prop) => {
     // const [gen, setgender] = useState('');
     // const [date, setdate] = useState('');
     // const [photo, setphoto] = useState('');
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        async function fetchData() {
+            const quoteData = await updateQuote();
+            quote = quoteData;
+        }
+        fetchData()
+    }, [])
+
     const onSubmit = (data: any) => {
         date = data.dob.toString();
         //photo = data.photo
@@ -29,6 +54,7 @@ const SecondPage = ({ gen, date, photo, updatePage2 }: prop) => {
         dispatch(updatePage2('dob', date));
         //dispatch(updatePage2('photo', photo));
         dispatch(updatePage2('gender', gen));
+        dispatch(updatePage2('quote', quote));
         navigate('/display');
     };
 
