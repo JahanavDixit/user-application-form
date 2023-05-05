@@ -5,7 +5,7 @@ const Header = () => {
 
     return (
         <div className="header">
-            <div> User Information Form </div>
+            <a href='/'> User Information Form </a>
         </div>
     );
 

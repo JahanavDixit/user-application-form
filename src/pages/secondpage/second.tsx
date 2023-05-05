@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
@@ -34,14 +34,14 @@ const SecondPage = ({ gen, date, photo, quote, updatePage2 }: prop) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const quoteRef = useRef({});
     useEffect(() => {
         async function fetchData() {
             const quoteData = await updateQuote();
-            quote = quoteData;
+            quoteRef.current = quoteData;
         }
         fetchData()
-    }, [])
+    }, [quote])
 
     const onSubmit = (data: any) => {
         date = data.dob.toString();
@@ -55,7 +55,7 @@ const SecondPage = ({ gen, date, photo, quote, updatePage2 }: prop) => {
         gen = data.gender;
         dispatch(updatePage2('dob', date));
         dispatch(updatePage2('gender', gen));
-        dispatch(updatePage2('quote', quote));
+        dispatch(updatePage2('quote', quoteRef.current));
         navigate('/display');
     };
 

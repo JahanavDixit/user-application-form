@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePage2 } from '../../app/store';
 
@@ -21,16 +21,17 @@ const DisplayPage: React.FC = (quote) => {
     const pageOneState = useSelector((state: any) => state.form.page1);
     const pageTwoState = useSelector((state: any) => state.form.page2);
     const dispatch = useDispatch();
+    const quoteRef = useRef({});
     const photoUrl = pageTwoState.photo;
     console.log(pageTwoState)
     useEffect(() => {
         async function fetchData() {
             const quoteData = await updateQuote();
-            quote = quoteData;
-            dispatch(updatePage2('quote', quote));
+            quoteRef.current = quoteData;
+            dispatch(updatePage2('quote', quoteRef));
         }
         fetchData()
-    }, [pageTwoState.quote == ''])
+    }, [dispatch])
     return (
         <>
             <h2>Display Page</h2>
