@@ -1,27 +1,35 @@
 
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { FieldValue, SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { updatePage2 } from '../../app/store';
+//import { Link } from 'react-router-dom';
 
-const options = [
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' },
-    { label: 'Other', value: 'other' },
-];
+interface prop {
+    gen: string,
+    date: string,
+    photo: any,
+    updatePage2: any
+};
 
 
-const SecondPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const SecondPage = ({ gen, date, photo, updatePage2 }: prop) => {
+    // const [gen, setgender] = useState('');
+    // const [date, setdate] = useState('');
+    // const [photo, setphoto] = useState('');
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const onSubmit = (data: any) => {
-        // Handle form submission
-        setEmail(data.email);
-        setPassword(data.password);
-        navigate('/submit');
+        date = data.dob.toString();
+        //photo = data.photo
+        gen = data.gender;
+        dispatch(updatePage2('dob', date));
+        //dispatch(updatePage2('photo', photo));
+        dispatch(updatePage2('gender', gen));
+        navigate('/display');
     };
 
     return (
@@ -35,21 +43,18 @@ const SecondPage = () => {
                 <div className='form-row'>
                     <label htmlFor="gender">Gender</label>
                     <div className='flex-container'>
-                        {options.map((option) => (
-                            <label key={option.value}>
-                                <input
-                                    name="gender"
-                                    type="radio"
-                                    value={option.value}
-                                />
-                                {option.label}
-                            </label>
-                        ))}
+                        <select {...register('gender', { required: true })}>
+                            <option value="" placeholder='Select Gender' >Select Gender </option>
+                            <option value="Male" placeholder='Male'>Male </option>
+                            <option value="Female" placeholder='Female'>Female </option>
+                            <option value="Other" placeholder='Other'>Other </option>
+                        </select>
                     </div>
+
                 </div>
                 <div className='form-row'>
                     <label htmlFor="photo">Upload Photo</label>
-                    <input type="file"{...register('photo', { required: true })} />
+                    <input type="file" {...register('photo', { required: true })} />
                     {errors.photo && <span>This field is required</span>}
                 </div>
                 <div className='form-row'>
