@@ -1,67 +1,61 @@
-import { configureStore} from '@reduxjs/toolkit';
-
-import { createAction } from '@reduxjs/toolkit';
-
-const UPDATE_FIELD = 'UPDATE_FIELD';
-const SUBMIT_FORM = 'SUBMIT_FORM';
-
-// Define the action creators
-export const updateField = createAction<{ key: string, value: any }>(UPDATE_FIELD);
-export const submitForm = createAction<void>(SUBMIT_FORM);
-
-interface PageOneState {
-  name: string;
-  address: string;
-  phoneNumber: string;
-  emailAddress: string;
-}
-
-interface PageTwoState {
-  dateOfBirth: string;
-  gender: string;
-  photo: string;
-}
-
-interface store {
-  pageone: PageOneState;
-  pagetwo: PageTwoState;
-}
-
-// Define initial state
+import { combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 const initialState = {
-  pageone:{
-  name: '',
-  address: '',
-  phoneNumber: '',
-  emailAddress: '',
+  page1: {
+    name: '',
+    email: '',
+    phone: '',
+    add :'',
   },
-  pagetwo: {
-  dateOfBirth: '',
-  gender: '',
-  photo: ''
-  }
+  page2: {
+    dob: '',
+    gender: '',
+    photo: '',
+  },
 };
 
-const formReducer = (state = initialState, action: any) => {
+const formReducer = (state = initialState, action: { type: any; payload: { field: any; value: any; }; }) => {
   switch (action.type) {
-    case UPDATE_FIELD:
-      const { key, value } = action.payload;
+    case 'UPDATE_PAGE_1':
       return {
         ...state,
-        [key]: value,
+        page1: {
+          ...state.page1,
+          [action.payload.field]: action.payload.value,
+        },
       };
-    case SUBMIT_FORM:
-      return state;
+    case 'UPDATE_PAGE_2':
+      return {
+        ...state,
+        page2: {
+          ...state.page2,
+          [action.payload.field]: action.payload.value,
+        },
+      };
     default:
       return state;
   }
 };
 
 
-const store = configureStore({
-  reducer: formReducer,
-  preloadedState: initialState,
+const rootReducer = combineReducers({
+  form: formReducer,
 });
 
+export const store = configureStore({reducer:rootReducer})
 
-export default store;
+export const updatePage1 = (field:any, value:any) => ({
+  type: 'UPDATE_PAGE_1',
+  payload: {
+    field,
+    value,
+  },
+});
+
+export const updatePage2 = (field:any, value:any) => ({
+  type: 'UPDATE_PAGE_2',
+  payload: {
+    field,
+    value,
+  },
+});

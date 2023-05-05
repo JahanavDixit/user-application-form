@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import './homepage.css';
+
+import { store, updatePage1 } from '../../app/store';
+
+const page: string = 'page1';
 
 interface FormData {
   name: string;
@@ -11,7 +15,7 @@ interface FormData {
   email: string;
 }
 
-const Homepage = () => {
+const Homepage = ({ name, add, mail, phone, updatePage1 }: any) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -22,7 +26,14 @@ const Homepage = () => {
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    name = data.name;
+    add = data.address
+    mail = data.email
+    phone = data.number
+    dispatch(updatePage1('name', name));
+    dispatch(updatePage1('add', add));
+    dispatch(updatePage1('email', mail));
+    dispatch(updatePage1('phone', phone));
     navigate('/second', { state: data });
   };
 
@@ -30,10 +41,6 @@ const Homepage = () => {
     event.preventDefault();
     handleSubmit(onSubmit)(event);
   };
-
-  const [name, setName] = useState('');
-  const [phone, setphone] = useState('');
-
   return (
     <>
       <div className="form-container">
