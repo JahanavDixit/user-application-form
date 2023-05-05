@@ -1,11 +1,10 @@
 
-import React, { useEffect, useState } from 'react';
-//import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+
 import { useNavigate } from 'react-router';
-import { FieldValue, SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { updatePage2 } from '../../app/store';
-//import { Link } from 'react-router-dom';
+
 
 interface prop {
     gen: string,
@@ -19,7 +18,6 @@ async function updateQuote() {
     const response = await fetch("https://api.quotable.io/random");
     const data = await response.json();
     if (response.ok) {
-        // Update DOM elements
         const content: string = data.content;
         const author: string = data.author;
         return { content, author }
@@ -32,9 +30,7 @@ async function updateQuote() {
 
 
 const SecondPage = ({ gen, date, photo, quote, updatePage2 }: prop) => {
-    // const [gen, setgender] = useState('');
-    // const [date, setdate] = useState('');
-    // const [photo, setphoto] = useState('');
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -49,10 +45,15 @@ const SecondPage = ({ gen, date, photo, quote, updatePage2 }: prop) => {
 
     const onSubmit = (data: any) => {
         date = data.dob.toString();
-        //photo = data.photo
+        photo = data.photo;
+        console.log(photo)
+        if (!(photo instanceof Blob)) {
+            photo = new Blob([photo[0]], { type: 'image/jpeg' });
+        }
+        dispatch(updatePage2('photo', URL.createObjectURL(photo)))
+
         gen = data.gender;
         dispatch(updatePage2('dob', date));
-        //dispatch(updatePage2('photo', photo));
         dispatch(updatePage2('gender', gen));
         dispatch(updatePage2('quote', quote));
         navigate('/display');
@@ -80,7 +81,7 @@ const SecondPage = ({ gen, date, photo, quote, updatePage2 }: prop) => {
                 </div>
                 <div className='form-row'>
                     <label htmlFor="photo">Upload Photo</label>
-                    <input type="file" {...register('photo', { required: true })} />
+                    <input type="file" accept="image/*" {...register('photo', { required: true })} />
                     {errors.photo && <span>This field is required</span>}
                 </div>
                 <div className='form-row'>

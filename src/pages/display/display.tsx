@@ -21,6 +21,8 @@ const DisplayPage: React.FC = (quote) => {
     const pageOneState = useSelector((state: any) => state.form.page1);
     const pageTwoState = useSelector((state: any) => state.form.page2);
     const dispatch = useDispatch();
+    const photoUrl = pageTwoState.photo;
+    console.log(pageTwoState)
     useEffect(() => {
         async function fetchData() {
             const quoteData = await updateQuote();
@@ -28,13 +30,13 @@ const DisplayPage: React.FC = (quote) => {
             dispatch(updatePage2('quote', quote));
         }
         fetchData()
-    }, [])
+    }, [pageTwoState.quote == ''])
     return (
         <>
-            <h2>Quote : </h2>
-            <i>{pageTwoState.quote.content} <br />
-                - {pageTwoState.quote.author}</i>
-            <h3>Display Page</h3>
+            <h2>Display Page</h2>
+            <h3>Quote  : </h3> <i>{pageTwoState.quote.content}
+                - {pageTwoState.quote.author}</i> <br /> <br />
+            <img src={photoUrl} alt="uploaded" style={{ width: '200px', height: '200px' }} />
             <p>Name:  {pageOneState.name}</p>
             <p>Address:  {pageOneState.add}</p>
             <p>Phone Number:  {pageOneState.phone}</p>

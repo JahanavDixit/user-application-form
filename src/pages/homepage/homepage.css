@@ -10,7 +10,10 @@
     width: 100vw;
     height : 100vh;
   }
-  
+  h3
+  {
+    display:inline;
+  }
   .form-row {
     display: flex;
     flex-direction: row;
