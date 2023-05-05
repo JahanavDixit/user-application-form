@@ -23,7 +23,6 @@ const DisplayPage: React.FC = (quote) => {
     const dispatch = useDispatch();
     const quoteRef = useRef({});
     const photoUrl = pageTwoState.photo;
-    console.log(pageTwoState)
     useEffect(() => {
         async function fetchData() {
             const quoteData = await updateQuote();
@@ -31,7 +30,7 @@ const DisplayPage: React.FC = (quote) => {
             dispatch(updatePage2('quote', quoteRef));
         }
         fetchData()
-    }, [dispatch])
+    }, [])
     return (
         <>
             <h2>Display Page</h2>
