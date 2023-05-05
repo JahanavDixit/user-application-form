@@ -41,7 +41,7 @@ const SecondPage = ({ gen, date, photo, quote, updatePage2 }: prop) => {
             quoteRef.current = quoteData;
         }
         fetchData()
-    }, [quote])
+    }, [])
 
     const onSubmit = (data: any) => {
         date = data.dob.toString();
