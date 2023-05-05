@@ -32,24 +32,30 @@ const SecondPage = () => {
                     <input type="date" {...register('dob', { required: true })} />
                     {errors.dob && <span>This field is required</span>}
                 </div>
-                <div className='form-row'> Gender
-                    {options.map((option) => (
-                        <label key={option.value}>
-                            <input
-                                type="radio"
-                                value={option.value}
-                            />
-                            {option.label}
-                        </label>
-                    ))}
+                <div className='form-row'>
+                    <label htmlFor="gender">Gender</label>
+                    <div className='flex-container'>
+                        {options.map((option) => (
+                            <label key={option.value}>
+                                <input
+                                    name="gender"
+                                    type="radio"
+                                    value={option.value}
+                                />
+                                {option.label}
+                            </label>
+                        ))}
+                    </div>
                 </div>
                 <div className='form-row'>
                     <label htmlFor="photo">Upload Photo</label>
                     <input type="file"{...register('photo', { required: true })} />
                     {errors.photo && <span>This field is required</span>}
                 </div>
-                <Link to='/'> Previous Page </Link>
-                <button type="submit">Submit</button>
+                <div className='form-row'>
+                    <button onClick={() => navigate('/')}> Previous Page </button>
+                    <button type="submit">Submit</button>
+                </div>
             </form>
         </>
     );
