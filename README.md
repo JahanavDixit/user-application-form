@@ -1,3 +1,4 @@
+[![User Information Form](https://img.shields.io/badge/On%20Netlify-LIVE-green?style=for-the-badge)](https://main--iridescent-mochi-97f5b1.netlify.app/)
 # User Application Form
 
 This is a user application form built using React and Redux. It allows users to input their personal information, including name, address, phone number, email address, date of birth, and gender. Users can also upload a photo.
