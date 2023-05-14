@@ -20,7 +20,7 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Provider store={store}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Header />
