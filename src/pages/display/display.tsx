@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePage2 } from '../../app/store';
+import { Box, Card, CardBody, CardFooter, Image, Stack, Text, Divider, Heading } from '@chakra-ui/react';
 
 async function updateQuote() {
     const response = await fetch("https://api.quotable.io/random");
@@ -34,16 +35,32 @@ const DisplayPage: React.FC = (quote) => {
     },)
     return (
         <>
-            <h2>Display Page</h2>
-            <h3>Quote  : </h3> <i>{pageTwoState.quote.content}
-                - {pageTwoState.quote.author}</i> <br /> <br />
-            <img src={photoUrl} alt="uploaded" style={{ width: '200px', height: '200px' }} />
-            <p>Name:  {pageOneState.name}</p>
-            <p>Address:  {pageOneState.add}</p>
-            <p>Phone Number:  {pageOneState.phone}</p>
-            <p>Email Address:  {pageOneState.email}</p>
-            <p>Date of Birth:  {pageTwoState.dob}</p>
-            <p>Gender:  {pageTwoState.gender}</p>
+            <Box p={4} borderWidth="1px" style={{ font: 'Inter' }} borderRadius="md" boxShadow="md">
+                <Text fontSize="lg" fontWeight="bold" mb={2}>Quote of the day:</Text>
+                <Text fontSize="lg" fontStyle="italic" mb={2}>"{pageTwoState.quote.content}"</Text>
+                <Text fontWeight="bold">- {pageTwoState.quote.author}</Text>
+            </Box>
+            <Card maxW='lg'>
+                <CardBody>
+                    <Image
+                        src={photoUrl}
+                        alt='photo'
+                        borderRadius='lg'
+                        style={{ width: '200px', height: '200px' }}
+                    />
+                    <Stack mt='6' spacing='3'>
+                        <Heading size='md'>{pageOneState.name}</Heading>
+                        {pageOneState.add && <Text size='md'>Address:  {pageOneState.add}</Text>}
+                        <Text size='md'>Phone Number:  {pageOneState.phone}</Text>
+                        <Text size='md'>Email Address:  {pageOneState.email}</Text>
+                        <Text size='md'>Date of Birth:  {pageTwoState.dob}</Text>
+                        <Text size='md'>Gender:  {pageTwoState.gender}</Text>
+                    </Stack>
+                </CardBody>
+                <Divider />
+                <CardFooter>
+                </CardFooter>
+            </Card>
         </>
     );
 };

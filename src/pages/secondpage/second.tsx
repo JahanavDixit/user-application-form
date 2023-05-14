@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
-
+import { Input, InputGroup, InputLeftAddon } from '@chakra-ui/react'
+import { Select } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -61,34 +62,43 @@ const SecondPage = ({ gen, date, photo, quote, updatePage2 }: prop) => {
 
     return (
         <>
-            <form className='form-container' onSubmit={handleSubmit(onSubmit)}>
-                <div className='form-row'>
-                    <label htmlFor="dob">Date Of Birth</label>
-                    <input type="date" {...register('dob', { required: true })} />
-                    {errors.dob && <span>This field is required</span>}
-                </div>
-                <div className='form-row'>
-                    <label htmlFor="gender">Gender</label>
-                    <div className='flex-container'>
-                        <select {...register('gender', { required: true })}>
-                            <option value="" placeholder='Select Gender' >Select Gender </option>
-                            <option value="Male" placeholder='Male'>Male </option>
-                            <option value="Female" placeholder='Female'>Female </option>
-                            <option value="Other" placeholder='Other'>Other </option>
-                        </select>
+            <div className='form-container'>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className='form-row'>
+                        <InputGroup size='sm'>
+                            <InputLeftAddon children='Date of Birth :' />
+                            <Input
+                                placeholder="Select Date and Time"
+                                type="date"
+                                {...register('dob', { required: true })}
+                                size="sm"
+                            />
+                            {errors.dob && <span>This field is required</span>}
+                        </InputGroup>
                     </div>
-
-                </div>
-                <div className='form-row'>
-                    <label htmlFor="photo">Upload Photo</label>
-                    <input type="file" accept="image/*" {...register('photo', { required: true })} />
-                    {errors.photo && <span>This field is required</span>}
-                </div>
-                <div className='form-row'>
-                    <button onClick={() => navigate('/')}> Previous Page </button>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
+                    <div className='form-row'>
+                        <InputGroup size='sm'>
+                            <InputLeftAddon children='Gender :' />
+                            <Select variant='outline' placeholder='Select option' {...register('gender', { required: true })}>
+                                <option value='Male'>Male</option>
+                                <option value='Female'>Female</option>
+                                <option value='Other'>Other</option>
+                            </Select>
+                        </InputGroup>
+                    </div>
+                    <div className='form-row'>
+                        <InputGroup size='sm'>
+                            <InputLeftAddon children='Photo :' />
+                            <Input type="file" accept="image/*" {...register('photo', { required: true })} />
+                            {errors.photo && <span>This field is required</span>}
+                        </InputGroup>
+                    </div>
+                    <div className='form-row'>
+                        <button onClick={() => navigate('/')}> Previous Page </button>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
         </>
     );
 }

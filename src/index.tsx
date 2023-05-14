@@ -5,6 +5,8 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import theme from './theme';
+import { ColorModeScript, ChakraProvider } from '@chakra-ui/react';
 import { Routes } from 'react-router';
 import { Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
@@ -18,16 +20,19 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/second" element={<SecondPage gen='' date='' photo='' quote='' updatePage2={updatePage2} />} />
-          <Route path="/display" element={<DisplayPage />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <ChakraProvider>
+      <Provider store={store}>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <Header />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/second" element={<SecondPage gen='' date='' photo='' quote='' updatePage2={updatePage2} />} />
+            <Route path="/display" element={<DisplayPage />} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </ChakraProvider>
   </React.StrictMode>
 );
 
