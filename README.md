@@ -22,6 +22,7 @@ To install the application, follow these steps:
 
 - React
 - Redux
+- Chakra UI
 - TypeScript
 - HTML/CSS
 
